@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test name="iLab Application Chrome">
+        <parameter name="iLabURL" value="https://www.ilabquality.com/"/>
+        <parameter name="Browser" value="Chrome"/>
+        <classes>
+            <class name="webTests.applicationTest"/>
+        </classes>
+    </test>
+
+    <test name="iLab Application Firefox">
+        <parameter name="iLabURL" value="https://www.ilabquality.com/"/>
+        <parameter name="Browser" value="firefox"/>
+        <classes>
+            <class name="webTests.applicationTest"/>
+        </classes>
+    </test>
+
+    <test name="iLab Application Microsoft Edge">
+        <parameter name="iLabURL" value="https://www.ilabquality.com/"/>
+        <parameter name="Browser" value="IE"/>
+        <classes>
+            <class name="webTests.applicationTest"/>
+        </classes>
+    </test>
+
+</suite>
