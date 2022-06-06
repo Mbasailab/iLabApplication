@@ -8,8 +8,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pageObjects.webFunctions;
-import report.extentReport;
 import webUtilities.webUtilities;
+import webUtilities.BrowserReports;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -18,12 +18,14 @@ import java.sql.SQLException;
 public class applicationTest
 {
     public webUtilities app = new webUtilities();
-    public extentReport rt = new extentReport();
+
     public webFunctions web = new webFunctions();
     DBConnection datafile = new DBConnection();
+    BrowserReports br  = new BrowserReports();
     ResultSet rs;
     String sUrl, sBrowser;
     ExtentReports reports;
+    ExtentTest node;
 
     @Parameters({"iLabURL", "Browser"})
     @BeforeTest
@@ -32,7 +34,9 @@ public class applicationTest
         sUrl = iLabURL;
         sBrowser = Browser;
         app.setWebDriver(app.initializeWebDriver(Browser));
-        reports = rt.initilizeExtentReporters("reports/iLabReport.html");
+        br.createBrowserReport(sBrowser);
+        node = br.getNode();
+        reports = br.getReports();
         try{
             rs = datafile.ConnectAndQuerySQL("jdbc:mysql://127.0.0.1/ilabapplication", "root", "Mabasa126", "select * from ilabdata");
         }
@@ -40,12 +44,11 @@ public class applicationTest
         {
             System.out.println(e.getMessage());
         }
+
     }
 
     @Test
     public void apply_iLab() throws InterruptedException, SQLException, IOException {
-        ExtentTest test = reports.createTest("iLab Vacancy Application ").assignAuthor("Mbasa Gwama");
-        ExtentTest node = test.createNode("iLAB application test");
 
         app.navigate(sUrl);
         web.SelectMenu(webUtilities.getWebDriver(), node);
